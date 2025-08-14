@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowerAI - Professional MLOps Platform</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0891b2;
+            --secondary-color: #f59e0b;
+            --accent-color: #fbbf24;
+            --text-dark: #374151;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            /* Increased base font size for better readability */
+            font-size: 18px;
+        }
+
+        .font-serif {
+            font-family: 'Work Sans', serif;
+        }
+
+        .font-sans {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        /* Improved gradient backgrounds with better color harmony */
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0e7490 100%);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #ecfeff 0%, #fef3c7 100%);
+        }
+
+        /* Flower Pattern Background */
+        .flower-pattern {
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(8, 145, 178, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(8, 145, 178, 0.04) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+
+        /* Fixed animations - removed shaking and improved stability */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes gentle-bloom {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.02); opacity: 1; }
+        }
+
+        @keyframes petal-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(8, 145, 178, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(8, 145, 178, 0.3); }
+        }
+
+        .flower-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .flower-bloom {
+            animation: gentle-bloom 4s ease-in-out infinite;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        .petal-animation {
+            animation: petal-fall linear infinite;
+        }
+
+        /* Improved floating petals with better colors */
+        .floating-petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(45deg, var(--accent-color), #fcd34d);
+            border-radius: 50% 0 50% 0;
+            opacity: 0.5;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            border-radius: 20px 20px 0 0 !important;
+            border: none;
+        }
+
+        /* Enhanced buttons with better styling */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #d97706 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 18px 35px;
+            font-weight: 600;
+            /* Increased button font size */
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(217, 119, 6, 0.3);
+        }
+
+        .btn-outline-light {
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            border-radius: 8px;
+            /* Increased font size */
+            font-size: 18px;
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        /* Improved form controls with larger text */
+        .form-control {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 18px 24px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(8, 145, 178, 0.25);
+        }
+
+        /* Enhanced form labels with larger text */
+        .form-label {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Improved result cards - completely removed shaking animation */
+        .result-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 3px solid var(--accent-color);
+            /* Removed any transform animations that could cause shaking */
+        }
+
+        .info-box {
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            /* Increased font size */
+            font-size: 18px;
+        }
+
+        .info-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box.cyan { background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); }
+        .info-box.green { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); }
+        .info-box.amber { background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); }
+        .info-box.purple { background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); }
+
+        /* Larger typography throughout */
+        .hero-title {
+            font-size: 4.5rem !important;
+            line-height: 1.2;
+        }
+
+        .fs-custom-large {
+            font-size: 1.8rem;
+        }
+
+        .fs-custom-medium {
+            font-size: 1.4rem;
+        }
+
+        /* Better responsive design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.2rem !important;
+            }
+
+            .card-body {
+                padding: 2.5rem;
+            }
+
+            .form-control {
+                font-size: 18px;
+                padding: 16px 20px;
+            }
+
+            body {
+                font-size: 16px;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Enhanced language buttons */
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* Increased font size */
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Custom layout adjustments for better left alignment */
+        .prediction-section {
+            max-width: 100%;
+        }
+
+        .result-section {
+            max-width: 100%;
+        }
+
+        /* Ensure images are responsive and properly sized */
+        .flower-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Petals -->
+    <div class="floating-petals" id="floatingPetals"></div>
+
+    <div class="flower-pattern">
+        <!-- Header -->
+        <header class="gradient-bg text-white py-4 shadow-lg">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <div class="flower-bloom me-3">
+                            <div class="d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
+                                <span style="font-size: 32px;">🌸</span>
+                            </div>
+                        </div>
+                        <h1 class="font-serif fw-bold fs-1 mb-0">FlowerAI</h1>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="lang-btn active" onclick="setLanguage('en')" id="btnEn">English</button>
+                        <button class="lang-btn" onclick="setLanguage('tr')" id="btnTr">Türkçe</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-gradient py-5">
+            <div class="container text-center">
+                <div class="flower-float mb-4">
+                    <h1 class="font-serif fw-bold hero-title mb-4" style="color: var(--primary-color);" id="heroTitle">
+                        Discover the Beauty of Nature: Predict Flower Species Instantly!
+                    </h1>
+                </div>
+                <h2 class="font-sans fs-custom-large text-muted mb-4" id="heroSubtitle">
+                    Advanced MLOps Platform for Iris Species Classification
+                </h2>
+                <p class="font-sans fs-custom-medium text-muted mx-auto" style="max-width: 900px;" id="heroDescription">
+                    Enter flower characteristics to unveil its identity using our state-of-the-art machine learning model.
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="container py-5">
+            <!-- Adjusted layout - prediction form takes more space and positioned left -->
+            <div class="row g-5">
+                <!-- Prediction Form -->
+                <div class="col-lg-8">
+                    <div class="prediction-section">
+                        <div class="card h-100 pulse-glow" style="border: 3px solid #a5f3fc;">
+                            <div class="card-header gradient-bg text-white">
+                                <h3 class="font-serif fs-2 d-flex align-items-center mb-0">
+                                    <span class="me-3">🔬</span>
+                                    <span id="formTitle">Predict Species</span>
+                                </h3>
+                            </div>
+                            <div class="card-body p-5">
+                                <form id="predictionForm">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <label for="sepalLength" class="form-label font-sans" id="labelSepalLength">
+                                                Sepal Length (cm)
+                                            </label>
+                                            <input type="number" class="form-control" id="sepalLength" step="0.1" placeholder="5.1" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="sepalWidth" class="form-label font-sans" id="labelSepalWidth">
+                                                Sepal Width (cm)
+                                            </label>
+                                            <input type="number" class="form-control" id="sepalWidth" step="0.1" placeholder="3.5" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="petalLength" class="form-label font-sans" id="labelPetalLength">
+                                                Petal Length (cm)
+                                            </label>
+                                            <input type="number" class="form-control" id="petalLength" step="0.1" placeholder="1.4" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="petalWidth" class="form-label font-sans" id="labelPetalWidth">
+                                                Petal Width (cm)
+                                            </label>
+                                            <input type="number" class="form-control" id="petalWidth" step="0.1" placeholder="0.2" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mt-5 py-4" id="predictBtn">
+                                        <span class="me-3">🌺</span>
+                                        <span id="predictBtnText">Predict Species</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section - positioned to the right, smaller width -->
+                <div class="col-lg-4">
+                    <div class="result-section">
+                        <div class="card h-100 result-card hidden" id="resultCard">
+                            <div class="card-header" style="background: linear-gradient(135deg, var(--secondary-color) 0%, #d97706 100%);">
+                                <h3 class="font-serif fs-3 d-flex align-items-center mb-0 text-white">
+                                    <span class="me-2">🎯</span>
+                                    <span id="resultTitle">Prediction Result</span>
+                                </h3>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="text-center mb-4">
+                                    <h3 class="font-serif fs-4 mb-3" style="color: var(--primary-color);">
+                                        <span id="speciesLabel">Predicted Species</span>:
+                                        <span style="color: var(--secondary-color);" id="predictedSpecies"></span>
+                                    </h3>
+
+                                    <img id="flowerImage" src="./Picture/setosa.jpg" alt="" class="img-fluid flower-image mb-3 flower-float" style="max-height: 200px;">
+                                    <p class="font-sans text-muted mb-4 fs-6" id="flowerInfo"></p>
+                                </div>
+
+                                <div class="row g-3" id="detailsContainer">
+                                    <!-- Details will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Display Section - positioned to the left when shown -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card result-card hidden" id="fullResultCard">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--secondary-color) 0%, #d97706 100%);">
+                            <h3 class="font-serif fs-2 d-flex align-items-center mb-0 text-white">
+                                <span class="me-3">🌺</span>
+                                <span id="fullResultTitle">Detailed Flower Information</span>
+                            </h3>
+                        </div>
+                        <div class="card-body p-5">
+                            <div class="row align-items-center mb-4">
+                                <div class="col-md-4 text-center">
+
+                                    <img id="fullFlowerImage" src="./Picture/setosa.jpg" alt="" class="img-fluid flower-image flower-float" style="max-height: 300px;">
+                                </div>
+                                <div class="col-md-8">
+                                    <h2 class="font-serif fs-1 mb-3" style="color: var(--primary-color);">
+                                        <span id="fullSpeciesLabel">Predicted Species</span>:
+                                        <span style="color: var(--secondary-color);" id="fullPredictedSpecies"></span>
+                                    </h2>
+                                    <p class="font-sans fs-5 text-muted mb-0" id="fullFlowerInfo"></p>
+                                </div>
+                            </div>
+
+                            <div class="row g-4" id="fullDetailsContainer">
+                                <!-- Details will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <section class="mt-5">
+                <div class="card" style="border: 3px solid #a5f3fc;">
+                    <div class="card-header gradient-bg text-white">
+                        <h3 class="font-serif fs-2 d-flex align-items-center mb-0">
+                            <span class="me-3">🤖</span>
+                            <span id="aboutTitle">About Our MLOps Platform</span>
+                        </h3>
+                    </div>
+                    <div class="card-body p-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <p class="font-sans fs-custom-medium text-muted mb-0" id="aboutText">
+                                    Our advanced machine learning platform uses sophisticated algorithms to classify Iris flower species with high accuracy. Built with modern MLOps practices, our system provides reliable predictions and comprehensive flower information.
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="flower-bloom">
+                                    <div class="d-flex align-items-center justify-content-center mx-auto rounded-circle"
+                                         style="width: 120px; height: 120px; background: linear-gradient(135deg, #22d3ee 0%, var(--accent-color) 100%);">
+                                        <span style="font-size: 60px;">🌸</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="gradient-bg text-white py-4 mt-5">
+            <div class="container text-center">
+                <p class="font-sans fs-5 mb-0" id="footerText">
+                    © 2024 FlowerAI - Professional MLOps Platform | Powered by Advanced Machine Learning
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Global variables
+        let currentLanguage = 'en';
+        let isLoading = false;
+
+        const flowerDatabase = {
+            setosa: {
+                image: "./Picture/setosa.jpg", // Bu dosyayı projenizin ana klasörüne ekleyin
+                info: {
+                    en: "Iris setosa is a small, hardy species with distinctive blue-purple flowers and sword-like leaves.",
+                    tr: "Iris setosa, belirgin mavi-mor çiçekleri ve kılıç benzeri yaprakları olan küçük, dayanıklı bir türdür."
+                },
+                details: {
+                    en: {
+                        description: "A resilient perennial that thrives in cooler climates, featuring compact growth and vibrant blooms.",
+                        habitat: "Native to Alaska, eastern Siberia, and northeastern Asia. Prefers moist, well-drained soils.",
+                        care: "Low maintenance. Water regularly during growing season, divide clumps every 3-4 years.",
+                        funFact: "This iris can survive temperatures as low as -40°C, making it one of the hardiest iris species!"
+                    },
+                    tr: {
+                        description: "Serin iklimlerde gelişen, kompakt büyüme ve canlı çiçekler sergileyen dayanıklı bir çok yıllık bitki.",
+                        habitat: "Alaska, doğu Sibirya ve kuzeydoğu Asya'ya özgü. Nemli, iyi drene edilmiş toprakları tercih eder.",
+                        care: "Düşük bakım gerektirir. Büyüme mevsiminde düzenli sulayın, her 3-4 yılda bir kümeleri bölün.",
+                        funFact: "Bu iris -40°C'ye kadar düşük sıcaklıklarda hayatta kalabilir, bu da onu en dayanıklı iris türlerinden biri yapar!"
+                    }
+                }
+            },
+            versicolor: {
+                image: "./Picture/Iris_versicolor_3.jpg",
+                info: {
+                    en: "Iris versicolor displays medium-sized, elegant blue-violet flowers with intricate petal patterns.",
+                    tr: "Iris versicolor, karmaşık taç yaprağı desenleri ile orta boyutlu, zarif mavi-menekşe çiçekler sergiler."
+                },
+                details: {
+                    en: {
+                        description: "Known as the Blue Flag Iris, this species creates stunning displays in wetland gardens.",
+                        habitat: "Native to eastern North America, thriving in marshes, swamps, and pond edges.",
+                        care: "Enjoys consistently moist soil. Plant in full sun to partial shade. Deadhead spent blooms.",
+                        funFact: "The Blue Flag Iris is the provincial flower of Quebec and appears on their coat of arms!"
+                    },
+                    tr: {
+                        description: "Mavi Bayrak İrisi olarak bilinen bu tür, sulak alan bahçelerinde çarpıcı görüntüler oluşturur.",
+                        habitat: "Doğu Kuzey Amerika'ya özgü, bataklıklar, sulak alanlar ve gölet kenarlarında gelişir.",
+                        care: "Sürekli nemli toprağı sever. Tam güneş veya yarı gölgede dikin. Solmuş çiçekleri temizleyin.",
+                        funFact: "Mavi Bayrak İrisi, Quebec'in il çiçeğidir ve arma üzerinde yer alır!"
+                    }
+                }
+            },
+            virginica: {
+                image: "./Picture/iris-virginica.jpg",
+                info: {
+                    en: "Iris virginica is the largest of the three species, featuring majestic purple flowers with yellow centers.",
+                    tr: "Iris virginica, sarı merkezli görkemli mor çiçekleri ile üç türün en büyüğüdür."
+                },
+                details: {
+                    en: {
+                        description: "A tall, stately iris that creates dramatic focal points in garden landscapes.",
+                        habitat: "Found throughout eastern and central North America in wet meadows and along streams.",
+                        care: "Prefers full sun and moist conditions. Mulch around plants to retain moisture.",
+                        funFact: "This iris can grow up to 3 feet tall and is often called the 'Southern Blue Flag'!"
+                    },
+                    tr: {
+                        description: "Bahçe manzaralarında dramatik odak noktaları oluşturan uzun boylu, görkemli bir iris.",
+                        habitat: "Doğu ve orta Kuzey Amerika'da nemli çayırlarda ve dere kenarlarında bulunur.",
+                        care: "Tam güneş ve nemli koşulları tercih eder. Nemi korumak için bitkilerin etrafını malçlayın.",
+                        funFact: "Bu iris 90 cm'ye kadar uzayabilir ve genellikle 'Güney Mavi Bayrağı' olarak adlandırılır!"
+                    }
+                }
+            }
+        };
+
+        const texts = {
+            en: {
+                title: "Discover the Beauty of Nature: Predict Flower Species Instantly!",
+                subtitle: "Advanced MLOps Platform for Iris Species Classification",
+                description: "Enter flower characteristics to unveil its identity using our state-of-the-art machine learning model.",
+                sepalLength: "Sepal Length (cm)",
+                sepalWidth: "Sepal Width (cm)",
+                petalLength: "Petal Length (cm)",
+                petalWidth: "Petal Width (cm)",
+                predict: "Predict Species",
+                predicting: "Analyzing...",
+                result: "Prediction Result",
+                species: "Predicted Species",
+                description_label: "Description",
+                habitat_label: "Natural Habitat",
+                care_label: "Care Instructions",
+                funFact_label: "Fun Fact",
+                about: "About Our MLOps Platform",
+                aboutText: "Our advanced machine learning platform uses sophisticated algorithms to classify Iris flower species with high accuracy. Built with modern MLOps practices, our system provides reliable predictions and comprehensive flower information.",
+                footer: "© 2024 FlowerAI - Professional MLOps Platform | Powered by Advanced Machine Learning",
+                fullResult: "Detailed Flower Information"
+            },
+            tr: {
+                title: "Doğanın Güzelliğini Keşfedin: Çiçek Türlerini Anında Tahmin Edin!",
+                subtitle: "İris Türü Sınıflandırması için Gelişmiş MLOps Platformu",
+                description: "Son teknoloji makine öğrenmesi modelimizi kullanarak çiçek özelliklerini girin ve kimliğini keşfedin.",
+                sepalLength: "Çanak Yaprağı Uzunluğu (cm)",
+                sepalWidth: "Çanak Yaprağı Genişliği (cm)",
+                petalLength: "Taç Yaprağı Uzunluğu (cm)",
+                petalWidth: "Taç Yaprağı Genişliği (cm)",
+                predict: "Türü Tahmin Et",
+                predicting: "Analiz Ediliyor...",
+                result: "Tahmin Sonucu",
+                species: "Tahmin Edilen Tür",
+                description_label: "Açıklama",
+                habitat_label: "Doğal Yaşam Alanı",
+                care_label: "Bakım Talimatları",
+                funFact_label: "İlginç Bilgi",
+                about: "MLOps Platformumuz Hakkında",
+                aboutText: "Gelişmiş makine öğrenmesi platformumuz, İris çiçek türlerini yüksek doğrulukla sınıflandırmak için sofistike algoritmalar kullanır. Modern MLOps uygulamaları ile inşa edilen sistemimiz güvenilir tahminler ve kapsamlı çiçek bilgileri sağlar.",
+                footer: "© 2024 FlowerAI - Profesyonel MLOps Platformu | Gelişmiş Makine Öğrenmesi ile Güçlendirilmiştir",
+                fullResult: "Detaylı Çiçek Bilgileri"
+            }
+        };
+
+        function createFloatingPetals() {
+            const container = document.getElementById('floatingPetals');
+            if (!container) return;
+
+            for (let i = 0; i < 6; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal petal-animation';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = i * 3 + 's';
+                petal.style.animationDuration = (12 + Math.random() * 6) + 's';
+                container.appendChild(petal);
+            }
+        }
+
+        // Language switching
+        function setLanguage(lang) {
+            currentLanguage = lang;
+
+            // Update language buttons
+            const btnEn = document.getElementById('btnEn');
+            const btnTr = document.getElementById('btnTr');
+
+            if (btnEn && btnTr) {
+                btnEn.classList.toggle('active', lang === 'en');
+                btnTr.classList.toggle('active', lang === 'tr');
+            }
+
+            // Update all text elements
+            const textElements = {
+                'heroTitle': 'title',
+                'heroSubtitle': 'subtitle',
+                'heroDescription': 'description',
+                'formTitle': 'predict',
+                'labelSepalLength': 'sepalLength',
+                'labelSepalWidth': 'sepalWidth',
+                'labelPetalLength': 'petalLength',
+                'labelPetalWidth': 'petalWidth',
+                'predictBtnText': 'predict',
+                'resultTitle': 'result',
+                'speciesLabel': 'species',
+                'aboutTitle': 'about',
+                'aboutText': 'aboutText',
+                'footerText': 'footer',
+                'fullResultTitle': 'fullResult',
+                'fullSpeciesLabel': 'species'
+            };
+
+            Object.entries(textElements).forEach(([elementId, textKey]) => {
+                const element = document.getElementById(elementId);
+                if (element && texts[lang] && texts[lang][textKey]) {
+                    element.textContent = texts[lang][textKey];
+                }
+            });
+        }
+
+        function predictSpecies(sepalLength, sepalWidth, petalLength, petalWidth) {
+            // Enhanced rule-based prediction for demo
+            let predictedSpecies = 'setosa';
+
+            // More sophisticated rules based on actual iris characteristics
+            if (petalLength <= 2.0 && petalWidth <= 0.6) {
+                predictedSpecies = 'setosa';
+            } else if (petalLength > 2.0 && petalLength <= 5.0) {
+                if (petalWidth <= 1.7) {
+                    predictedSpecies = 'versicolor';
+                } else {
+                    predictedSpecies = 'virginica';
+                }
+            } else {
+                predictedSpecies = 'virginica';
+            }
+
+            return predictedSpecies;
+        }
+
+        function displayResults(species) {
+            const resultCard = document.getElementById('resultCard');
+            const fullResultCard = document.getElementById('fullResultCard');
+            const flowerData = flowerDatabase[species];
+
+            if (!flowerData) {
+                console.error('Flower data not found for species:', species);
+                return;
+            }
+
+            // Update species name
+            const predictedSpeciesEl = document.getElementById('predictedSpecies');
+            const fullPredictedSpeciesEl = document.getElementById('fullPredictedSpecies');
+
+            if (predictedSpeciesEl) predictedSpeciesEl.textContent = `Iris ${species}`;
+            if (fullPredictedSpeciesEl) fullPredictedSpeciesEl.textContent = `Iris ${species}`;
+
+            // Update images and info
+            const flowerImage = document.getElementById('flowerImage');
+            const flowerInfo = document.getElementById('flowerInfo');
+            const fullFlowerImage = document.getElementById('fullFlowerImage');
+            const fullFlowerInfo = document.getElementById('fullFlowerInfo');
+
+            if (flowerImage) {
+                flowerImage.src = flowerData.image;
+                flowerImage.alt = `Iris ${species}`;
+            }
+
+            if (flowerInfo) {
+                flowerInfo.textContent = flowerData.info[currentLanguage];
+            }
+
+            if (fullFlowerImage) {
+                fullFlowerImage.src = flowerData.image;
+                fullFlowerImage.alt = `Iris ${species}`;
+            }
+
+            if (fullFlowerInfo) {
+                fullFlowerInfo.textContent = flowerData.info[currentLanguage];
+            }
+
+            // Update details in full result card
+            const fullDetailsContainer = document.getElementById('fullDetailsContainer');
+            if (fullDetailsContainer) {
+                fullDetailsContainer.innerHTML = `
+                    <div class="col-md-6">
+                        <div class="info-box cyan">
+                            <h4 class="font-serif mb-3" style="color: var(--primary-color);">
+                                <span class="me-2">📝</span>
+                                ${texts[currentLanguage].description_label}
+                            </h4>
+                            <p class="font-sans fs-6 mb-0">${flowerData.details[currentLanguage].description}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box green">
+                            <h4 class="font-serif mb-3" style="color: #059669;">
+                                <span class="me-2">🌍</span>
+                                ${texts[currentLanguage].habitat_label}
+                            </h4>
+                            <p class="font-sans fs-6 mb-0">${flowerData.details[currentLanguage].habitat}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box amber">
+                            <h4 class="font-serif mb-3" style="color: var(--secondary-color);">
+                                <span class="me-2">🌱</span>
+                                ${texts[currentLanguage].care_label}
+                            </h4>
+                            <p class="font-sans fs-6 mb-0">${flowerData.details[currentLanguage].care}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box purple">
+                            <h4 class="font-serif mb-3" style="color: #7c3aed;">
+                                <span class="me-2">💡</span>
+                                ${texts[currentLanguage].funFact_label}
+                            </h4>
+                            <p class="font-sans fs-6 mb-0">${flowerData.details[currentLanguage].funFact}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Show result cards
+            if (resultCard) resultCard.classList.remove('hidden');
+            if (fullResultCard) fullResultCard.classList.remove('hidden');
+
+            // Scroll to full results
+            setTimeout(() => {
+                if (fullResultCard) {
+                    fullResultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('predictionForm');
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    if (isLoading) return;
+
+                    const sepalLength = parseFloat(document.getElementById('sepalLength').value);
+                    const sepalWidth = parseFloat(document.getElementById('sepalWidth').value);
+                    const petalLength = parseFloat(document.getElementById('petalLength').value);
+                    const petalWidth = parseFloat(document.getElementById('petalWidth').value);
+
+                    // Enhanced validation
+                    if (!sepalLength || !sepalWidth || !petalLength || !petalWidth) {
+                        alert(currentLanguage === 'en' ? 'Please fill in all fields' : 'Lütfen tüm alanları doldurun');
+                        return;
+                    }
+
+                    if (sepalLength < 0 || sepalWidth < 0 || petalLength < 0 || petalWidth < 0) {
+                        alert(currentLanguage === 'en' ? 'Please enter positive values' : 'Lütfen pozitif değerler girin');
+                        return;
+                    }
+
+                    // Set loading state
+                    isLoading = true;
+                    const predictBtn = document.getElementById('predictBtn');
+                    const predictBtnText = document.getElementById('predictBtnText');
+
+                    if (predictBtn && predictBtnText) {
+                        predictBtn.disabled = true;
+                        predictBtnText.innerHTML = `<span class="spinner me-2"></span>${texts[currentLanguage].predicting}`;
+                    }
+
+                    // Hide previous results
+                    const resultCard = document.getElementById('resultCard');
+                    const fullResultCard = document.getElementById('fullResultCard');
+                    if (resultCard) resultCard.classList.add('hidden');
+                    if (fullResultCard) fullResultCard.classList.add('hidden');
+
+                    try {
+                        // Simulate API call delay
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+
+                        // Make prediction
+                        const species = predictSpecies(sepalLength, sepalWidth, petalLength, petalWidth);
+
+                        // Display results
+                        displayResults(species);
+                    } catch (error) {
+                        console.error('Prediction error:', error);
+                        alert(currentLanguage === 'en' ? 'An error occurred during prediction' : 'Tahmin sırasında bir hata oluştu');
+                    } finally {
+                        // Reset loading state
+                        isLoading = false;
+                        if (predictBtn && predictBtnText) {
+                            predictBtn.disabled = false;
+                            predictBtnText.innerHTML = `<span class="me-3">🌺</span>${texts[currentLanguage].predict}`;
+                        }
+                    }
+                });
+            }
+
+            // Initialize the page
+            createFloatingPetals();
+            setLanguage('en');
+        });
+    </script>
+</body>
+</html>
