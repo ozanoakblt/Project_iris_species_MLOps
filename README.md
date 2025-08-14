@@ -16,6 +16,13 @@ Proje ayrıca **Docker** ile containerize edilebilir ve GitHub/LinkedIn üzerind
 - **Açıklama:** 3 farklı iris türünü (Setosa, Versicolor, Virginica) sepal ve petal ölçülerine göre sınıflandırmak.
 
 ---
+📬 İletişim
+
+Geliştirici: Ozan Akbulut
+
+LinkedIn: linkedin.com/in/ozan-akbulutt
+
+E-posta: ozan.akbltt@gmail.com
 
 ## ⚙ Kullanılan Teknolojiler
 
@@ -59,13 +66,7 @@ with open("iris_gnb_model.pkl", "wb") as f:
 {
     "predicted_species": "Iris-setosa"
 }
-📬 İletişim
 
-Geliştirici: Ozan Akbulut
-
-LinkedIn: linkedin.com/in/ozan-akbulutt
-
-E-posta: ozan.akbltt@gmail.com
 
 
 
